@@ -10,27 +10,21 @@ import (
 )
 
 /*
- * Complete the 'compareTriplets' function below.
+ * Complete the 'aVeryBigSum' function below.
  *
- * The function is expected to return an INTEGER_ARRAY.
- * The function accepts following parameters:
- *  1. INTEGER_ARRAY a
- *  2. INTEGER_ARRAY b
+ * The function is expected to return a LONG_INTEGER.
+ * The function accepts LONG_INTEGER_ARRAY ar as parameter.
  */
 
-func compareTriplets(a []int32, b []int32) [2]int32 {
+func aVeryBigSum(ar []int64) int64 {
+	// Write your code here
+	var count int64 = 0
 
-	var aP, bP int32 = 0, 0
-
-	for i := 0; i < len(a); i++ {
-		if a[i] > b[i] {
-			aP++
-		}
-		if a[i] < b[i] {
-			bP++
-		}
+	for i := 0; i < len(ar); i++ {
+		count += ar[i]
 	}
-	return [2]int32{aP, bP}
+
+	return count
 }
 
 func main() {
@@ -43,39 +37,22 @@ func main() {
 
 	writer := bufio.NewWriterSize(stdout, 16*1024*1024)
 
-	aTemp := strings.Split(strings.TrimSpace(readLine(reader)), " ")
+	arCount, err := strconv.ParseInt(strings.TrimSpace(readLine(reader)), 10, 64)
+	checkError(err)
 
-	var a []int32
+	arTemp := strings.Split(strings.TrimSpace(readLine(reader)), " ")
 
-	for i := 0; i < 3; i++ {
-		aItemTemp, err := strconv.ParseInt(aTemp[i], 10, 64)
+	var ar []int64
+
+	for i := 0; i < int(arCount); i++ {
+		arItem, err := strconv.ParseInt(arTemp[i], 10, 64)
 		checkError(err)
-		aItem := int32(aItemTemp)
-		a = append(a, aItem)
+		ar = append(ar, arItem)
 	}
 
-	bTemp := strings.Split(strings.TrimSpace(readLine(reader)), " ")
+	result := aVeryBigSum(ar)
 
-	var b []int32
-
-	for i := 0; i < 3; i++ {
-		bItemTemp, err := strconv.ParseInt(bTemp[i], 10, 64)
-		checkError(err)
-		bItem := int32(bItemTemp)
-		b = append(b, bItem)
-	}
-
-	result := compareTriplets(a, b)
-
-	for i, resultItem := range result {
-		fmt.Fprintf(writer, "%d", resultItem)
-
-		if i != len(result)-1 {
-			fmt.Fprintf(writer, " ")
-		}
-	}
-
-	fmt.Fprintf(writer, "\n")
+	fmt.Fprintf(writer, "%d\n", result)
 
 	writer.Flush()
 }
