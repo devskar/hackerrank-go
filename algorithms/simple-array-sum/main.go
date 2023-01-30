@@ -28,7 +28,6 @@ func simpleArraySum(ar []int32) int32 {
 func main() {
 	reader := bufio.NewReaderSize(os.Stdin, 16*1024*1024)
 
-	fmt.Print("Here:" + os.Getenv("OUTPUT_PATH"))
 	stdout, err := os.Create(os.Getenv("OUTPUT_PATH"))
 	checkError(err)
 
